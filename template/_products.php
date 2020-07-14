@@ -1,72 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://kit.fontawesome.com/2b0d01e607.js"crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha256-UhQQ4fxEeABh4JrcmAJ1+16id/1dnlOEVCFOxDef9Lw=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha256-kksNxjDRxd/5+jGurZUJd1sdR2v+ClrCl3svESBaJqw=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="./style.css">
-    <title>Mobile Shopee</title>
-</head>
-<body>
-    <!-- header -->
-    <header id='header'>
-        <div class="strip d-flex justify-content-between px-4 py-1 bg-light">
-            <p class="font-rale font-size-12 text-black-50 m-0">Lorem ipsum dolor sit amet co
-                nsecteturciltaellendus laboriosam nam rerum nisi.
-            </p>
-            <div class="font-rale font-size-14">
-                <a href="#" class="px-3 border-right border-left text-dark">Login</a>
-                <a href="#" class="px-3 border-right text-dark">whishlist</a>
-            </div>
-        </div>
-        <!-- NAVIGATION BAR -->
-         <nav class="navbar navbar-expand-lg navbar-dark color-second-bg">
-             <a href="#" class="navbar-brand">Mobile Shopee</a>
-             <button class="navbar-toggler" type="button" data-toggle='collapse' data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                 <span class="navbar-toggler-icon"></span>
-             </button>
-             <div class="collapse navbar-collapse" id="navbarNav">
-                 <ul class="navbar-nav m-auto">
-                     <li class="nav-item active">
-                         <a href="#" class="nav-link">On Sale</a>
-                     </li>
-                     <li class="nav-item">
-                         <a href="#" class="nav-link">Category</a>
-                     </li>
-                     <li class="nav-item">
-                         <a href="#" class="nav-link">Products <i class="fas fa-chevron-down"></i> </a>
-                     </li>
-                     <li class="nav-item">
-                         <a href="#" class="nav-link">Blog</a>
-                     </li>
-                     <li class="nav-item">
-                         <a href="#" class="nav-link">Category<i class="fas fa-chevron-down"></i></a>
-                     </li>
-                 </ul>
-                 <form action="#" class="font-size-14 font-rale">
-                     <a href="" class="py-2 rounded-pill color-primary-bg">
-                         <span class="font-size-16 text-white"><i class="fas fa-shopping-cart"></i></span>
-                         <span class="px-3 py-2 rounded-pill text-dark bg-light">0</span>
-                     </a>
-                 </form>
-             </div>
-         </nav>
-        <!-- NAVIGATION BAR -->
-    </header>
-    <!-- header -->
-
-
-    <!-- main -->
-    <main id="main-site">
+<?php
+if(isset($_GET['item_id'])){
+    $id=$_GET['item_id'];
+    $productArr = $product->getData();
+    $specificProduct = $productArr[$id-1];
+}
+else{
+    header('location:./index.php');
+    exit();
+}
+?>
+<main id="main-site">
         <!-- PRODUCT -->
         <section id="product" class="py-3">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6">
-                        <img src="./assets/products/1.png" class="img-fluid">
+                        <img src="<?php echo $specificProduct['item_image']?>" class="img-fluid">
                         <div class="form-row pt-4 font-size-16-font-baloo">
                             <div class="col">
                                 <button type="submit" class="btn btn-danger form-control">Proceed to Buy</button>
@@ -77,8 +26,8 @@
                         </div>
                     </div>
                     <div class="col-sm-6 py-5">
-                        <h5 class="font-baloo font-size-20">Samsung Galaxy 10</h5>
-                        <small>by Samsung</small>
+                        <h5 class="font-baloo font-size-20"><?php echo $specificProduct['item_name']?></h5>
+                        <small>by <?php echo $specificProduct['item_brand']?></small>
                         <div class="d-flex">
                             <div class="rating text-warning font-size-20">
                                 <span><i class="fas fa-star"></i></span>
@@ -98,7 +47,7 @@
                             </tr>
                             <tr>
                                 <td>Deal Price </td>
-                                <td class="font-size-20 text-danger">$152 <small class="text-dark">&nbsp;&nbsp;inclusive of all taxes</small></td>
+                                <td class="font-size-20 text-danger"><?php echo $specificProduct['item_price']?> <small class="text-dark">&nbsp;&nbsp;inclusive of all taxes</small></td>
                             </tr>
                             <tr>
                                 <td>You Save:</td>
@@ -155,9 +104,9 @@
                              <div class="qty d-flex">
                                  <h6 class="font-baloo">Qty:</h6>
                                  <div class="font-rale">
-                                     <button class="qty-up border bg-light"><i class="fas fa-angle-up"></i></button>
-                                     <input type="text" class="qty-input w-50" disabled value="1">
-                                     <button class="qty-down border bg-light"><i class="fas fa-angle-down"></i></button>
+                                     <button class="qty-up border bg-light" data-id="<?php echo $specificProduct['item_id']?>"><i class="fas fa-angle-up"></i></button>
+                                     <input type="text" class="qty-input w-50" disabled value="1" data-id="<?php echo $specificProduct['item_id']?>">
+                                     <button class="qty-down border bg-light"><i class="fas fa-angle-down" data-id="<?php echo $specificProduct['item_id']?>"></i></button>
                                  </div>
                              </div>
                          </div>
@@ -186,19 +135,3 @@
         </section>
         <!-- PRODUCT -->
     </main>
-    <!-- main -->
-
-
-    <!-- footer -->
-    <footer>
-
-    </footer>
-    <!-- footer -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha256-pTxD+DSzIwmwhOqTFN+DB+nHjO4iAsbgfyFq5K5bcE0=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
-    <script src="./index.js"></script>
-</body>
-</html>
